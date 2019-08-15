@@ -94,7 +94,7 @@ This has two benefits. First, you won't break the apps of anyone using your pack
 
 In this scenario, your package's `package.json` is as slim as it was in [Scenario #1](#scenario-1-your-package) and all your testing packages are in the `devDependencies` of your testing package, further slimming your overall package.
 
-## Open Questions :confused: :confounded: :disappointed: :cry:
+## Open Questions :confused: :confounded: :disappointed: :weary:
 
 Why does [Scenario #2](#scenario-2-real-life) fail? When our client app's `dependencies` exactly match the `devDependencies` from `my-package`, shouldn't yarn/npm just figure this out and only use the one?
 
