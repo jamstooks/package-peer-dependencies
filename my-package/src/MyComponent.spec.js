@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 
-import { MyComponent } from "my-package";
+import { MyComponent } from "./MyComponent";
 
 describe("MyComponent", () => {
   it("Renders w/out errors", () => {
