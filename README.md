@@ -44,7 +44,7 @@ You've built a package, it doesn't have tests, but it works just fine. Your `pac
 
 branch: [everything-is-broken](https://github.com/jamstooks/package-peer-dependencies/tree/everything-is-broken)
 
-This is actually used, so you decide to write tests... now your `packages.json` needs `devDependencies` and starts to look more like this:
+This is the real world, so you decide to write tests... now your `packages.json` needs `devDependencies` and starts to look more like this:
 
 ```json
 {
@@ -90,7 +90,7 @@ branch: [master](https://github.com/jamstooks/package-peer-dependencies/tree/mas
 
 Since there's no easy way to `yarn install --include-peers` as of yet, the best solution I can think of is to extract/hoist your tests into another package that installs the peer dependencies and runs the tests.
 
-This has two benefits. First, you won't break the apps of anyone using your package and second, you will also be e2e testing your package... ensuring that your `dist` is built properly, you're exporting all your components correctly and that sort of thing.
+This has two benefits. First, you won't break the apps of anyone using your package and second, you will also be e2e testing your package, in a way... ensuring that your `dist` is built properly, you're exporting all your components correctly and that sort of thing.
 
 In this scenario, your package's `package.json` is as slim as it was in [Scenario #1](#scenario-1-your-package) and all your testing packages are in the `devDependencies` of your testing package, further slimming your overall package.
 
