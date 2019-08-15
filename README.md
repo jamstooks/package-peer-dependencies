@@ -2,13 +2,19 @@
 
 This seems to be a [consistent issue](https://github.com/yarnpkg/yarn/issues/1503) for library authors:
 
-> How can you test your package/library without corrupting the devDependencies of your clients?
+> How can you test your peerDependencies for your package/library without duplication in devDependencies?
 
 This repo attempts to document examples where this problem arises and provide a potential workaround. There are still [open questions](#open-questions) at the bottom of this readme.
 
+## TL;DR
+
+Move your tests to a separate `tests` package that installs `peerDependencies` as `dependencies`.
+
+Also, don't forget to remove `node_modules` from your package when using local dependencies (`"my-package": "file:../../my-package"`). yarn/npm will happily pull that right in and cause conflict mayhem.
+
 ## Notes
 
-Each scenario comes with a branch. Once in the branch, just:
+Each scenario below comes with a branch. Once in the branch, just:
 
 ```
 cd client-app
@@ -75,7 +81,7 @@ This is the real world, so you decide to write tests... now your `packages.json`
 }
 ```
 
-Since `yarn`/`npm` don't support the installation of `peerDependencies`, you have to duplicate them in `devDependencies` in order to run `yarn test`. This really stinks, not just because it's unnecessary duplication, but as you find out down the road. It breaks some apps that use this package by forcing them to install your dev dependencies. Anyone recognize this one?
+Since `yarn`/`npm` don't support the installation of `peerDependencies`, you have to duplicate them in `devDependencies` in order to run `yarn test`. This really stinks, not just because it's unnecessary duplication, but when testing this package locally, you'll use local dependencies, like `"my-package": "file:/path/to/my-package"` and if you don't clear out `node_modules` from `my-packages` _every time_ you'll end up corrupting your client's installed modules and see something like this:
 
 ```
 Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
@@ -83,6 +89,8 @@ Invalid hook call. Hooks can only be called inside of the body of a function com
 2. You might be breaking the Rules of Hooks
 3. You might have more than one copy of React in the same app
 ```
+
+Incidentally, I have no idea why this is default functionality for npm/yarn. It's super annoying. That being said, you can always add the purging of `node_modules` to your build script... see the [the-workaround](https://github.com/jamstooks/package-peer-dependencies/tree/the-workaround) branch for an example of `build:fresh` that I am using in some projects.
 
 ### Scenario 3: Extracting Tests
 
