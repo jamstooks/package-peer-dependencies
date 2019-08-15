@@ -44,7 +44,7 @@ You've built a package, it doesn't have tests, but it works just fine. Your `pac
 
 branch: [everything-is-broken](https://github.com/jamstooks/package-peer-dependencies/tree/everything-is-broken)
 
-Your package doesn't actually work as expected. So, you decide to write tests... now your `packages.json` needs `devDependencies` and starts to look more like this:
+This is actually used, so you decide to write tests... now your `packages.json` needs `devDependencies` and starts to look more like this:
 
 ```json
 {
