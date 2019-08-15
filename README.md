@@ -10,7 +10,7 @@ This repo attempts to document examples where this problem arises and provide a 
 
 Move your tests to a separate `tests` package that installs `peerDependencies` as `dependencies`.
 
-Also, don't forget to remove `node_modules` from your package when using local dependencies (`"my-package": "file:../../my-package"`)
+Also, don't forget to remove `node_modules` from your package when using local dependencies (`"my-package": "file:../../my-package"`). yarn/npm will happily pull that right in and cause conflict mayhem.
 
 ## Notes
 
