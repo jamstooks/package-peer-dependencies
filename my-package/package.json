@@ -8,17 +8,28 @@
   "private": true,
   "scripts": {
     "build": "babel ./src/ --out-dir ./dist --copy-files --ignore '**/tests/**'",
-    "clean": "yarn rimraf ./build"
+    "clean": "yarn rimraf ./build",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "enzyme": "3.10.0",
+    "enzyme-adapter-react-16": "1.14.0",
+    "jest": "^24.8.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ]
   }
 }
