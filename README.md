@@ -6,7 +6,7 @@ This seems to be a [consistent issue](https://github.com/yarnpkg/yarn/issues/150
 
 This repo attempts to document examples where this problem arises and provide a potential workaround. There are still [open questions](#open-questions) at the bottom of this readme.
 
-## Scenarios
+## Notes
 
 Each scenario comes with a branch. Once in the branch, just:
 
@@ -17,6 +17,8 @@ yarn start
 ```
 
 This will recompile the library (`my-package`) and reinstall it.
+
+## Scenarios
 
 ### Scenario 1: Your Package
 
