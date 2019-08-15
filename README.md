@@ -1,0 +1,81 @@
+# Experiments with `peerDependencies` and `devDependencies` for packages
+
+This seems to be a [consistent issue](https://github.com/yarnpkg/yarn/issues/1503) for library authors:
+
+> How can you test your package/library without corrupting the devDependencies of your clients?
+
+## Scenario 1: Your Package
+
+You've built a package, it doesn't have tests, but it works just fine. Your `package.json` might look something like this:
+
+```json
+{
+  "name": "my-package",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel ./src/ --out-dir ./dist --copy-files --ignore '**/*.test.js'"
+  },
+  "peerDependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  }
+}
+```
+
+All is fine and dandy. This example is provided in the `starting-point` branch of this repo.
+
+## Scenario 2: Real Life
+
+Your package doesn't actually work as expected. So, you decide to write tests... now your `packages.json` needs `devDependencies` and starts to look more like this:
+
+```json
+{
+  "name": "my-package",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel ./src/ --out-dir ./dist --copy-files --ignore '**/*.test.js'",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "enzyme": "3.10.0",
+    "enzyme-adapter-react-16": "1.14.0",
+    "jest": "^24.8.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "peerDependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
+  }
+}
+```
+
+Since `yarn`/`npm` don't support the installation of `peerDependencies`, you have to duplicate them in `devDependencies`. This really stinks, not just because it's unnecessary duplication, but as you find out down the road. It breaks apps that use this package by forcing them to install your dev dependencies. Anyone recognize this one?
+
+```
+Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
+1. You might have mismatching versions of React and the renderer (such as React DOM)
+2. You might be breaking the Rules of Hooks
+3. You might have more than one copy of React in the same app
+```
+
+This example is provided in the `everything-is-broken` branch of this repo.
+
+# Scenario 3: Extracting Tests
+
+Since there's no easy way to `yarn install --include-peers` as of yet, the best solution I can think of is to extract your tests into another package that installs the peer dependencies and runs the tests.
+
+This has two benefits. First, you won't break the apps of anyone using your package and second, you will also be e2e testing your package... ensuring that your `dist` is built properly, you're exporting all your components correctly and that sort of thing.
+
+In this scenario, your package's `package.json` is as slim as it was in `Scenario #1` and all your testing packages are in the `devDependencies` of your testing package, further slimming your overall package.
+
+# Open Question
+
+Why does `Scenario #2` fail? When our client app's `dependencies` exactly match the `devDependencies` from `my-package`, shouldn't yarn/npm just figure this out and only use the one?
