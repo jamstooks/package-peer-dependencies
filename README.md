@@ -99,3 +99,5 @@ In this scenario, your package's `package.json` is as slim as it was in [Scenari
 Why does [Scenario #2](#scenario-2-real-life) fail? When our client app's `dependencies` exactly match the `devDependencies` from `my-package`, shouldn't yarn/npm just figure this out and only use the one?
 
 This doesn't fix all scenarios... you may still need `devDependencies` in your package that can't be extracted into the external test package and I don't know how conflicts can be avoided there. In [Scenario #3](#scenario-3-extracting-tests) I'm still using `babel` in `devDependencies` and that doesn't appear to cause conflicts down the line. I wonder why? That brings us back to the first question above.
+
+What about other `devDependencies` like `storybook` for building a demo? Should that be in it's own app too? This kind of thing could add a fair number of extra apps to your package.
