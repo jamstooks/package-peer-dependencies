@@ -1,9 +1,0 @@
-{
-  "name": "package-peer-dependencies",
-  "description": "Experiments with dependencies for javascript libraries",
-  "repository": "https://github.com/jamstooks/package-peer-dependencies",
-  "scripts": {
-    "test": "yarn --cwd my-package jest",
-    "start": "yarn --cwd client-app install && yarn --cwd client-app start"
-  }
-}

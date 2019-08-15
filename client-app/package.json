@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "my-package": "file:../my-package",
+    "my-package": "file:my-package",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-scripts": "3.1.1"
