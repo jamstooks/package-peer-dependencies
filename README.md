@@ -1,4 +1,4 @@
-# Experiments with `peerDependencies` and `devDependencies` for packages
+# Experiments with dependencies for javascript libraries
 
 This seems to be a [consistent issue](https://github.com/yarnpkg/yarn/issues/1503) for library authors:
 
