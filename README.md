@@ -6,7 +6,21 @@ This seems to be a [consistent issue](https://github.com/yarnpkg/yarn/issues/150
 
 This repo attempts to document examples where this problem arises and provide a potential workaround. There are still [open questions](#open-questions) at the bottom of this readme.
 
-## Scenario 1: Your Package
+## Scenarios
+
+Each scenario comes with a branch. Once in the branch, just:
+
+```
+cd client-app
+yarn install --force
+yarn start
+```
+
+This will recompile the library (`my-package`) and reinstall it.
+
+### Scenario 1: Your Package
+
+branch: [starting-point](https://github.com/jamstooks/package-peer-dependencies/tree/starting-point)
 
 You've built a package, it doesn't have tests, but it works just fine. Your `package.json` might look something like this:
 
@@ -24,9 +38,9 @@ You've built a package, it doesn't have tests, but it works just fine. Your `pac
 }
 ```
 
-All is fine and dandy. This example is provided in the `starting-point` branch of this repo.
+### Scenario 2: Real Life
 
-## Scenario 2: Real Life
+branch: [everything-is-broken](https://github.com/jamstooks/package-peer-dependencies/tree/everything-is-broken)
 
 Your package doesn't actually work as expected. So, you decide to write tests... now your `packages.json` needs `devDependencies` and starts to look more like this:
 
@@ -68,9 +82,9 @@ Invalid hook call. Hooks can only be called inside of the body of a function com
 3. You might have more than one copy of React in the same app
 ```
 
-This example is provided in the `everything-is-broken` branch of this repo.
+### Scenario 3: Extracting Tests
 
-# Scenario 3: Extracting Tests
+branch: [master](https://github.com/jamstooks/package-peer-dependencies/tree/master)
 
 Since there's no easy way to `yarn install --include-peers` as of yet, the best solution I can think of is to extract/hoist your tests into another package that installs the peer dependencies and runs the tests.
 
@@ -80,7 +94,7 @@ This has two benefits. First, you won't break the apps of anyone using your pack
 
 In this scenario, your package's `package.json` is as slim as it was in [Scenario #1](#scenario-1-your-package) and all your testing packages are in the `devDependencies` of your testing package, further slimming your overall package.
 
-# Open Questions
+## Open Questions
 
 Why does [Scenario #2](#scenario-2-real-life) fail? When our client app's `dependencies` exactly match the `devDependencies` from `my-package`, shouldn't yarn/npm just figure this out and only use the one?
 
