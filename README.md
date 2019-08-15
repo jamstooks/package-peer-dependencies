@@ -70,7 +70,9 @@ This example is provided in the `everything-is-broken` branch of this repo.
 
 # Scenario 3: Extracting Tests
 
-Since there's no easy way to `yarn install --include-peers` as of yet, the best solution I can think of is to extract your tests into another package that installs the peer dependencies and runs the tests.
+Since there's no easy way to `yarn install --include-peers` as of yet, the best solution I can think of is to extract/hoist your tests into another package that installs the peer dependencies and runs the tests.
+
+This example is provided in the `master` branch of this repo.
 
 This has two benefits. First, you won't break the apps of anyone using your package and second, you will also be e2e testing your package... ensuring that your `dist` is built properly, you're exporting all your components correctly and that sort of thing.
 
