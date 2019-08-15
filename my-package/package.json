@@ -7,7 +7,7 @@
   "license": "none",
   "private": true,
   "scripts": {
-    "build": "babel ./src/ --out-dir ./dist --copy-files --ignore '**/tests/**'",
+    "build": "babel ./src/ --out-dir ./dist --copy-files",
     "clean": "yarn rimraf ./build"
   },
   "devDependencies": {
