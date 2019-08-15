@@ -4,6 +4,8 @@ This seems to be a [consistent issue](https://github.com/yarnpkg/yarn/issues/150
 
 > How can you test your package/library without corrupting the devDependencies of your clients?
 
+This repo attempts to document examples where this problem arises and provide a potential workaround. There are still [open questions](#open-questions) at the bottom of this readme.
+
 ## Scenario 1: Your Package
 
 You've built a package, it doesn't have tests, but it works just fine. Your `package.json` might look something like this:
@@ -76,8 +78,10 @@ This example is provided in the `master` branch of this repo.
 
 This has two benefits. First, you won't break the apps of anyone using your package and second, you will also be e2e testing your package... ensuring that your `dist` is built properly, you're exporting all your components correctly and that sort of thing.
 
-In this scenario, your package's `package.json` is as slim as it was in `Scenario #1` and all your testing packages are in the `devDependencies` of your testing package, further slimming your overall package.
+In this scenario, your package's `package.json` is as slim as it was in [Scenario #1](#scenario-1-your-package) and all your testing packages are in the `devDependencies` of your testing package, further slimming your overall package.
 
-# Open Question
+# Open Questions
 
-Why does `Scenario #2` fail? When our client app's `dependencies` exactly match the `devDependencies` from `my-package`, shouldn't yarn/npm just figure this out and only use the one?
+Why does [Scenario #2](#scenario-2-real-life) fail? When our client app's `dependencies` exactly match the `devDependencies` from `my-package`, shouldn't yarn/npm just figure this out and only use the one?
+
+This doesn't fix all scenarios... you may still need `devDependencies` in your package that can't be extracted into the external test package and I don't know how conflicts can be avoided there. In [Scenario #3](#scenario-3-extracting-tests) I'm still using `babel` `devDependencies` and that doesn't appear to cause conflicts down the line. I wonder why? That brings us back to the first question above.
