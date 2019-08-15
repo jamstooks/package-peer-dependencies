@@ -75,7 +75,7 @@ Your package doesn't actually work as expected. So, you decide to write tests...
 }
 ```
 
-Since `yarn`/`npm` don't support the installation of `peerDependencies`, you have to duplicate them in `devDependencies`. This really stinks, not just because it's unnecessary duplication, but as you find out down the road. It breaks apps that use this package by forcing them to install your dev dependencies. Anyone recognize this one?
+Since `yarn`/`npm` don't support the installation of `peerDependencies`, you have to duplicate them in `devDependencies` in order to run `yarn test`. This really stinks, not just because it's unnecessary duplication, but as you find out down the road. It breaks some apps that use this package by forcing them to install your dev dependencies. Anyone recognize this one?
 
 ```
 Invalid hook call. Hooks can only be called inside of the body of a function component. This could happen for one of the following reasons:
@@ -90,14 +90,12 @@ branch: [master](https://github.com/jamstooks/package-peer-dependencies/tree/mas
 
 Since there's no easy way to `yarn install --include-peers` as of yet, the best solution I can think of is to extract/hoist your tests into another package that installs the peer dependencies and runs the tests.
 
-This example is provided in the `master` branch of this repo.
-
 This has two benefits. First, you won't break the apps of anyone using your package and second, you will also be e2e testing your package... ensuring that your `dist` is built properly, you're exporting all your components correctly and that sort of thing.
 
 In this scenario, your package's `package.json` is as slim as it was in [Scenario #1](#scenario-1-your-package) and all your testing packages are in the `devDependencies` of your testing package, further slimming your overall package.
 
-## Open Questions
+## Open Questions :confused: :confounded: :disappointed: :cry:
 
 Why does [Scenario #2](#scenario-2-real-life) fail? When our client app's `dependencies` exactly match the `devDependencies` from `my-package`, shouldn't yarn/npm just figure this out and only use the one?
 
-This doesn't fix all scenarios... you may still need `devDependencies` in your package that can't be extracted into the external test package and I don't know how conflicts can be avoided there. In [Scenario #3](#scenario-3-extracting-tests) I'm still using `babel` `devDependencies` and that doesn't appear to cause conflicts down the line. I wonder why? That brings us back to the first question above.
+This doesn't fix all scenarios... you may still need `devDependencies` in your package that can't be extracted into the external test package and I don't know how conflicts can be avoided there. In [Scenario #3](#scenario-3-extracting-tests) I'm still using `babel` in `devDependencies` and that doesn't appear to cause conflicts down the line. I wonder why? That brings us back to the first question above.
