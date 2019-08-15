@@ -13,7 +13,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "preinstall": "yarn --cwd ../my-package && yarn --cwd ../my-package build"
+    "preinstall": "yarn --cwd ../my-package build:fresh"
   },
   "eslintConfig": {
     "extends": "react-app"
